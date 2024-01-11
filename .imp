@@ -1,0 +1,3 @@
+#for type genration
+supabase gen types typescript --project-id bxshlraklhwfprjggmux > database.types.ts
+npx supabase gen types typescript --project-id bxshlraklhwfprjggmux > types/supabse.ts
