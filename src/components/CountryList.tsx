@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { countries } from "../types";
 import { fetchCountries, removeCountry } from "../services/country";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import EditCountry from "./EditCountry";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  countryListStSelector,
+  getCountriesAction,
+} from "../redux/features/countrySlice";
 
 const CountryList = () => {
-  const [countries, setCountries] = useState<countries>([]);
+  const dispatch = useAppDispatch();
+  const countries = useAppSelector(countryListStSelector);
 
   useEffect(() => {
-    getCountries();
+    dispatch(getCountriesAction());
   }, []);
-
-  async function getCountries() {
-    const data = await fetchCountries();
-    setCountries(data as countries);
-  }
 
   return (
     <div>

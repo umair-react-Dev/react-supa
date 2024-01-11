@@ -13,8 +13,10 @@ export const addCountry = async (name: string) => {
     const Query = supabase.from("countries").insert(newCountry);
     // type QueryType = QueryData<typeof Query>;
     const { data, error } = await Query;
+    // console.log("new data :", newCountry);
+
     if (error) throw error;
-    return data;
+    return newCountry;
   } catch (error) {
     console.error("countries updating error: ", error);
     return false;
