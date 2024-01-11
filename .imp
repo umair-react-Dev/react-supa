@@ -1,3 +1,8 @@
 #for type genration
 supabase gen types typescript --project-id bxshlraklhwfprjggmux > database.types.ts
 npx supabase gen types typescript --project-id bxshlraklhwfprjggmux > types/supabse.ts
+
+git remote add origin https://github.com/umair-react-Dev/react-supa.git
+git branch -M main
+git push -u origin main
+
