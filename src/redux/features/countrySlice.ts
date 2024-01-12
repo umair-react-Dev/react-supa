@@ -39,9 +39,10 @@ export const getCountriesAction = createAsyncThunk(
 
 export const addCountryAction = createAsyncThunk(
   "post/countries",
-  async (country: string) => {
+  async (newCountry: { country: string; callback: any }) => {
     try {
-      const data = await addCountry(country);
+      const data = await addCountry(newCountry.country);
+      newCountry.callback();
       console.log("country  : ", data);
       return {
         data,
@@ -73,10 +74,11 @@ export const removeCountryAction = createAsyncThunk(
 
 export const updateCountryAction = createAsyncThunk(
   "update/countries",
-  async (country: country) => {
+  async (editData: { country: country; callback: any }) => {
     try {
-      const data = await updateCountries(country);
+      const data = await updateCountries(editData.country);
       console.log("country list : ", data);
+      editData.callback();
       return {
         data,
         success: true,
