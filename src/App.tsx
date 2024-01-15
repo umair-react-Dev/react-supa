@@ -4,7 +4,7 @@ import CountryList from "./components/CountryList";
 function App() {
   return (
     <div className="flex flex-col justify-center items-center">
-      <div>
+      <div className="my-4">
         <CountryInput action="add" />
       </div>
       <div className=" w-52">

@@ -18,7 +18,7 @@ export const addCountry = async (name: string) => {
     if (error) throw error;
     return newCountry;
   } catch (error) {
-    console.error("countries updating error: ", error);
+    console.error("error while adding country: ", error);
     return false;
   }
 };
@@ -32,7 +32,9 @@ export const updateCountries = async (updatedObj: country) => {
     // type QueryType = QueryData<typeof Query>;
     const { data, error } = await Query;
     if (error) throw error;
-    return data;
+    console.log("update object : ", updatedObj);
+
+    return updatedObj as country;
   } catch (error) {
     console.error("countries updating error: ", error);
   }
@@ -43,8 +45,10 @@ export const removeCountry = async (id: number) => {
     const Query = supabase.from("countries").delete().eq("id", id);
     // type QueryType = QueryData<typeof Query>;
     const { data, error } = await Query;
+    console.log(data, id);
+
     if (error) throw error;
-    return data;
+    return id;
   } catch (error) {
     console.error("countries deleting error: ", error);
   }

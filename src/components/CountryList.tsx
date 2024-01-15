@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { countries } from "../types";
+import { useEffect, useState } from "react";
+import { countries, country } from "../types";
 import { fetchCountries, removeCountry } from "../services/country";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 import EditCountry from "./EditCountry";
@@ -7,9 +7,11 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   countryListStSelector,
   getCountriesAction,
+  removeCountryAction,
 } from "../redux/features/countrySlice";
 
 const CountryList = () => {
+  const [nowCountry, setNowCountry] = useState<country>({ id: 0, name: "" });
   const dispatch = useAppDispatch();
   const countries = useAppSelector(countryListStSelector);
 
@@ -28,7 +30,7 @@ const CountryList = () => {
             <div>{country.name}</div>
             <div className="flex flex-row justify-between items-center space-x-2">
               <button
-                onClick={() => removeCountry(country.id)}
+                onClick={() => dispatch(removeCountryAction(country.id))}
                 className="btn    hover:btn-error h-4"
               >
                 <TrashIcon className="h-5 w-5" />
@@ -37,6 +39,7 @@ const CountryList = () => {
               <button
                 className="btn    hover:btn-warning h-4"
                 onClick={() => {
+                  setNowCountry(country);
                   const dialog = document.getElementById(
                     "my_modal_3"
                   ) as HTMLDialogElement;
@@ -47,10 +50,10 @@ const CountryList = () => {
                 <PencilIcon className="h-5 w-5" />
               </button>
             </div>
-            <EditCountry country={country} />
           </li>
         ))}
       </ul>
+      <EditCountry country={nowCountry} />
     </div>
   );
 };

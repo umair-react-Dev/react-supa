@@ -60,7 +60,7 @@ export const removeCountryAction = createAsyncThunk(
     try {
       const res = await removeCountry(id);
 
-      console.log("remove country : ", res);
+      console.log("remove country : ", id, "out : ", res);
       return {
         data: res,
         success: true,
@@ -83,7 +83,7 @@ export const updateCountryAction = createAsyncThunk(
         data,
         success: true,
         code: 200,
-      };
+      } as { data: country; success: boolean; code: number };
     } catch (error: any) {
       console.error("An error occurred while updated country:", error);
     }
@@ -121,7 +121,7 @@ const countrySlice = createSlice({
 
       if (success && code === 200) {
         state.status = "success";
-        state.list = data;
+        state.list.push(data);
       } else {
         state.status = "failed";
       }
@@ -139,7 +139,8 @@ const countrySlice = createSlice({
 
       if (success && code === 200) {
         state.status = "success";
-        state.list = data;
+
+        state.list = state.list.filter(({ id }) => id != data);
       } else {
         state.status = "failed";
       }
@@ -157,7 +158,14 @@ const countrySlice = createSlice({
 
       if (success && code === 200) {
         state.status = "success";
-        state.list = data;
+
+        console.log("data : ", data);
+
+        state.list.forEach((country: country) => {
+          if (country.id === data.id) {
+            country.name = data.name;
+          }
+        });
       } else {
         state.status = "failed";
       }
